@@ -152,3 +152,31 @@ transferred 751-row features: that is not the requested EPA-response control.
 **Do not merge/submit these scripts as "original source code".
 Review locally, run in the intended environment, inspect outputs,
 then document changes and whether analysis was prospective or post hoc.**
+
+
+## Recovered local original EPA source path (from research workspace inventory)
+
+The author's previous local inventory identifies the broad source table:
+E:\College\Research\Pharmacodia Libararies\Chemoinformatics\1\Git Files\chemical_httr_assay_aggregated.feather
+
+It also identifies the original NF-kB-only subset:
+E:\College\Research\Pharmacodia Libararies\Chemoinformatics\1\Additional_file_4_Reproducibility_archive\data\NFkB_Phase7C_HTTr_Selected_Features.csv
+
+The second is not sufficient for Reviewer 2's non-NFkB comparator.
+Use extract_epa_response_controls.py --feather "<original broad table>"
+--output-dir "<local output>" to inspect its true column names without
+uploading the ~394 MB source file. Supply a nine-name JSON list selected
+on biological rationale BEFORE looking at assay-specific performance.
+Then export and retransfer from the small subset.
+
+### Interpreting EPA-derived suffixes
+
+A related 2026 HTTr/Tox21 methods paper (Cattebeke et al.,
+doi:10.1186/s13321-026-01231-4) describes _max as the median of the two
+highest-magnitude concentration responses; _dose_at_max as the dose level
+of the greatest absolute response; and _AUC_neg as trapezoidal AUC for
+negative responses (sign convention inverted for some interpretations).
+Confirm equivalence with this project's actual source feature generation.
+The nine targeted NF-kB _max summaries were a compact biology-driven
+selection; do NOT assert a measured advantage over _AUC_neg without
+the corresponding sensitivity analysis and actual source values.
