@@ -4,7 +4,8 @@
 NEW ANALYSIS (2026-11): not the original Phase-6/7 training script.
 Never overwrite archived OOF probabilities, fitted models, or prospective outputs.
 
-Runs matched structure-only, chemical-neighborhood, and NF-kB HTTr arms.
+Runs matched structure-only, chemical-neighborhood, and NF-kB HTTr arms,
+plus optional EPA response-permuted and non-NF-kB HTTr controls.
 Each outer-training partition independently chooses:
 - model family / small hyperparameter candidate set via inner scaffold-aware OOF AP;
 - raw vs cross-fitted Platt probabilities via inner-training Brier score;
@@ -20,7 +21,7 @@ Usage:
    --reliability ... --groups ecfp4_085 --out reviewer_outputs/similarity085
 
 EPA response permutations and NON-NF-kB biological controls require ORIGINAL EPA
-chemical-response tables and are not represented by this three-arm experiment.
+chemical-response tables and are included only when --controls is supplied.
 """
 import argparse, json, hashlib, sys
 from pathlib import Path
@@ -211,6 +212,18 @@ def run(a):
     arms = {"Structure": x_struct, "NFkB_HTTr": np.column_stack((x_struct, x_httr))}
     if x_neigh is not None:
         arms["EPA_Neighborhood"] = np.column_stack((x_struct, x_neigh))
+    if a.controls:
+        ctrl = pd.read_csv(a.controls)
+        shuffled_cols = sorted(c for c in ctrl if c.startswith("SHUF_") and c.endswith("_kNN"))
+        other_cols = sorted(c for c in ctrl if c.startswith("NONNF_") and c.endswith("_kNN"))
+        if len(shuffled_cols) != 27 or len(other_cols) != 27:
+            raise ValueError("Control file must contain 27 SHUF and 27 NONNF columns")
+        aligned = matrix[["InChIKey"]].merge(ctrl[["InChIKey"] + shuffled_cols + other_cols],
+                                             on="InChIKey", how="left", validate="one_to_one")
+        xs = aligned[shuffled_cols].apply(pd.to_numeric, errors="coerce").to_numpy(float)
+        xn = aligned[other_cols].apply(pd.to_numeric, errors="coerce").to_numpy(float)
+        arms["EPA_ResponsePermuted"] = np.column_stack((x_struct, xs))
+        arms["EPA_NonNFkB"] = np.column_stack((x_struct, xn))
     if a.groups == "scaffold":
         groups = matrix.Murcko_Scaffold.fillna("").astype(str).to_numpy()
         groups = np.where(groups == "", matrix.InChIKey.astype(str), groups)
@@ -300,7 +313,8 @@ def run(a):
        neighborhood_sha256=sha256(a.reliability) if a.reliability else None,
        rdkit_version=rdBase.rdkitVersion, sklearn_version=SK_VERSION,
        xgboost_version=XGB_VERSION,
-       missing_controls=["EPA_RESPONSE_PERMUTED_BEFORE_NEIGHBOR_AVERAGING",
+       controls_sha256=sha256(a.controls) if a.controls else None,
+       missing_controls=[] if a.controls else ["EPA_RESPONSE_PERMUTED_BEFORE_NEIGHBOR_AVERAGING",
                          "NON_NFKB_EPA_RESPONSE_SUMMARIES"])
     (out/"analysis_manifest.json").write_text(json.dumps(manifest, indent=2)+"\n",encoding="utf-8")
     print(pd.DataFrame(met).to_string(index=False))
@@ -310,6 +324,7 @@ def cli():
     p.add_argument("--matrix",required=True)
     p.add_argument("--httr",required=True)
     p.add_argument("--reliability")
+    p.add_argument("--controls", help="Optional EPA permuted/non-NFkB control features CSV")
     p.add_argument("--out",required=True)
     p.add_argument("--seed",type=int,default=42)
     p.add_argument("--groups",choices=["scaffold","ecfp4_085"],default="scaffold")
