@@ -13,6 +13,12 @@ Supporting materials for the manuscript **“Reliability-aware context-specific 
 - `results/NFkB_Phase5_Model_Benchmarks.csv` — complete 15-row Phase-5 benchmark across model families and assay contexts.
 - `results/NFkB_Phase8D_Final_12_Leads.csv` — final 12-compound prospective lead audit with predictions and selection metadata.
 
+Additional saved evaluation tables:
+- `results/NFkB_Phase6_Deployment_Metrics.csv` — Phase-6 locked structure-model metrics.
+- `results/NFkB_Phase6_Deployment_ScaffoldBootstrap_CI.csv` — scaffold-bootstrap confidence limits.
+- `results/NFkB_Phase7D_HTTr_kNN_Teacher_Ablation.csv` — matched Phase-7 HTTr ablation metrics.
+- `results/NFkB_Phase7D_HTTr_kNN_ScaffoldBootstrap_Delta_CI.csv` — Phase-7 paired scaffold-bootstrap differences.
+
 ### Other repository files
 - `requirements.txt` — package versions for the archived final-audit environment, not necessarily all historical modeling runs.
 - `DATA_SOURCES.md` — public assay and transcriptomic source locations.
