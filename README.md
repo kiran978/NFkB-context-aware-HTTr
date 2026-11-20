@@ -1,6 +1,6 @@
 # Reliability-aware context-specific NF-κB chemoinformatics — reproducibility repository
 
-Supporting materials for the manuscript **“Reliability-aware context-specific chemoinformatics with selective transcriptomic transfer for prospective NF-κB inhibitor prioritization”** (Journal of Molecular Graphics and Modelling submission; see article for current venue and status).
+Supporting materials for the manuscript **“Reliability-aware context-specific chemoinformatics with selective transcriptomic transfer for prospective NF-κB inhibitor prioritization”** (Journal of Cheminformatics submission).
 
 ## Repository inventory (verified)
 
