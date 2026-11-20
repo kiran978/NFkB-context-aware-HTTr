@@ -1,0 +1,10 @@
+Task,Metric,Estimate,CI95_Lower,CI95_Upper,Method
+Bcell489023,AUROC,0.695454,0.639485,0.746031,"1,000-replicate Murcko-scaffold bootstrap"
+Bcell489023,AUPRC,0.589164,0.506268,0.678004,"1,000-replicate Murcko-scaffold bootstrap"
+Bcell489023,MCC,0.286241,0.182344,0.3851,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa489022,AUROC,0.710112,0.652229,0.763765,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa489022,AUPRC,0.505588,0.415391,0.609795,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa489022,MCC,0.247238,0.141855,0.359226,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa2337,AUROC,0.764356,0.691257,0.840403,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa2337,AUPRC,0.764125,0.707393,0.84401,"1,000-replicate Murcko-scaffold bootstrap"
+TNFa2337,MCC,0.474428,0.34199,0.608734,"1,000-replicate Murcko-scaffold bootstrap"
