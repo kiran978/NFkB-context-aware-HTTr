@@ -1,0 +1,4 @@
+Task,Deployment_Model,N,Active,AUROC,AUPRC,MCC,Balanced_Accuracy,F1,Sensitivity,Specificity,Brier,ECE10
+Bcell489023,Task-specific RBF-SVM (full-data gate selected alpha_shared=0.0),469,190,0.695454,0.589164,0.286241,0.632286,0.521472,0.447368,0.817204,0.216242,0.048683
+TNFa489022,Task-specific XGBoost + Platt calibration,469,148,0.710112,0.505588,0.247238,0.593079,0.372093,0.27027,0.915888,0.191926,0.044041
+TNFa2337,Task-specific RBF-SVM (raw; Platt worsened Brier/ECE),283,157,0.764356,0.764125,0.474428,0.73304,0.778116,0.815287,0.650794,0.192691,0.073758
