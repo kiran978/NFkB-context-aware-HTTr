@@ -37,4 +37,4 @@ Transferred HTTr features were an exploratory auxiliary representation rather th
 
 PubChem assay identifiers: 489023, 489022, 489021, 2337 and 1183838. EPA HTTr source records: GEO GSE272548 (MCF-7), GSE274318 (U-2 OS) and GSE284321 (HepaRG). Data reuse remains subject to the respective upstream source terms.
 
-A repository `LICENSE` file is present. Its copyright-holder line requires confirmation from the contributing rights holders before it can be considered final; that legal attribution should not be guessed from authorship alone.
+Repository-authored software is distributed under the MIT License; the copyright notice is `Copyright (c) 2026 Kiran N. Gaikwad`. Third-party data and software remain governed by their respective licences and terms.
