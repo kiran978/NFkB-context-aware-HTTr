@@ -1,35 +1,34 @@
-# Reproducibility archive — context-specific NF-kB cheminformatics study
+# Reliability-aware context-specific NF-κB chemoinformatics — reproducibility repository
 
-This archive contains the source code, curated machine-readable inputs, frozen out-of-fold predictions, final fitted model, HTTr transfer inputs, prospective predictions and summary results required to reproduce the quantitative conclusions reported in the Journal of Cheminformatics submission.
+Supporting materials for the manuscript **“Reliability-aware context-specific chemoinformatics with selective transcriptomic transfer for prospective NF-κB inhibitor prioritization”** (Journal of Molecular Graphics and Modelling submission; see article for current venue and status).
 
-## Directory map
-- `source_code/03_phase5_context_aware_nfkB.py` — original Phase-5 context-aware data/model analysis script.
-- `source_code/04_phase6_context_model.py` — original Phase-6 gated-model, calibration, uncertainty and applicability-domain script.
-- `source_code/05_reproduce_httr_transfer.py` — reconstructs the 27 transferred HTTr features from the compact EPA feature table supplied here.
-- `source_code/06_reproduce_httr_statistics.py` — paired scaffold-bootstrap comparison of structure-only vs HTTr-augmented OOF predictions.
-- `source_code/07_reproduce_prospective_summary.py` — reproduces the prospective-screen funnel counts.
-- `data/NFkB_Phase5_Multitask_Matrix_751.csv` — curated 751-compound multi-context matrix.
-- `data/NFkB_Phase7C_HTTr_Selected_Features.csv` — compact 4,142-row EPA HTTr feature subset used for transfer/feasibility analyses.
-- `data/SMILES_data.csv`, `data/chemical_dtxsid_map.csv` — EPA chemical identity/structure mappings used for the HTTr source set.
-- `results/` — frozen Phase-6/7/8 OOF predictions, confidence intervals and prospective outputs.
-- `models/NFkB_Phase6_Final_Context_Model.joblib` — frozen fitted structure-only context model bundle used before the Phase-7 B-cell augmentation layer was added.
+## Repository inventory (verified)
 
-## Public source data
-The underlying HTTr experiments are public through GEO: GSE272548 (MCF-7), GSE274318 (U-2 OS) and GSE284321 (HepaRG). The EPA high-throughput transcriptomics pipeline is openly available from USEPA/CompTox-httrpl. PubChem assay data are public under AID 489023, 489022, 489021, 2337 and 1183838.
+### Analysis / reconstruction utilities
+- `source_code/05_reproduce_httr_transfer.py` — archived helper to reconstruct 27 nearest-neighbour HTTr-derived features from the source EPA feature subset; this is a *reconstruction utility*, not the fitted deployment model.
+- `source_code/06_reproduce_httr_statistics.py` — archived paired scaffold-bootstrap HTTr ablation utility using saved out-of-fold (OOF) predictions.
+- `source_code/07_reproduce_prospective_summary.py` — archived Phase-8 prospective-screen funnel summary utility using saved prospective CSVs.
 
-The compact `NFkB_Phase7C_HTTr_Selected_Features.csv` supplied in this archive contains the exact selected HTTr summaries used in this study, so reproduction of the reported transfer and statistical comparisons does not require downloading the full ~394 MB project intermediate Feather matrix.
+### Results available in this repository
+- `results/NFkB_Phase5_Model_Benchmarks.csv` — complete 15-row Phase-5 benchmark across model families and assay contexts.
+- `results/NFkB_Phase8D_Final_12_Leads.csv` — final 12-compound prospective lead audit with predictions and selection metadata.
 
-## Environment
-The analysis environment used for final audit is listed in `requirements.txt`. Random seeds and fold logic are documented in the source scripts; the main scaffold-CV seed was 42.
+### Other repository files
+- `requirements.txt` — package versions for the archived final-audit environment, not necessarily all historical modeling runs.
+- `DATA_SOURCES.md` — public assay and transcriptomic source locations.
 
-## Reproduce core numerical checks
-1. Run `04_phase6_context_model.py` against the curated matrix using its documented input paths, or inspect the frozen OOF and bootstrap outputs in `results/`.
-2. Recreate the 27 transfer features with `05_reproduce_httr_transfer.py` if desired.
-3. Run `06_reproduce_httr_statistics.py` to reproduce the paired scaffold-bootstrap HTTr delta analysis.
-4. Run `07_reproduce_prospective_summary.py` on the frozen Phase-8 files to reproduce the reported screening funnel.
+## Supplementary article archive
 
-## Important interpretation boundary
-The study deliberately rejected a universal transcriptomic teacher. HTTr augmentation was retained only for Bcell489023 after paired scaffold-bootstrap evidence; the TNF models remained structure-only. The target/docking analyses are hypothesis-generating and are not required to reproduce the primary cheminformatics conclusions.
+The study's `Additional_file_4_Reproducibility_archive` package includes the full curated assay and EPA input files, Phase-6 and Phase-7 saved OOF predictions, Phase-8 all-2,000-compound results and a fitted **Phase-6 structure-only** context-model bundle. The Phase-6 fitted bundle should not be represented as the deployed Phase-7 HTTr-augmented B-cell model.
 
-## License
-Source code in this supplementary archive is intended to be released under the MIT License. Replace the `[AUTHORS TO INSERT]` placeholder in `LICENSE` before public deposition/submission.
+The original archive also contains documentation-only outlines named `03_phase5_context_aware_nfkB.py` and `04_phase6_context_model.py`; these are **not executable model-training scripts**. They are not listed here as reproducible source code. The three published utilities above reproduce selected processing/statistics from saved data but do not independently establish an exact end-to-end rerun of the original fitting and screening stages.
+
+## Scientific interpretation
+
+Transferred HTTr features were an exploratory auxiliary representation rather than directly measured responses in the assay compounds. Later similarity-blocked and pathway-control analyses qualified the original development-stage B-cell improvement. See the revised manuscript and corresponding supplementary sensitivity analyses for the full interpretation.
+
+## Data provenance and licensing
+
+PubChem assay identifiers: 489023, 489022, 489021, 2337 and 1183838. EPA HTTr source records: GEO GSE272548 (MCF-7), GSE274318 (U-2 OS) and GSE284321 (HepaRG). Data reuse remains subject to the respective upstream source terms.
+
+A repository `LICENSE` file is present. Its copyright-holder line requires confirmation from the contributing rights holders before it can be considered final; that legal attribution should not be guessed from authorship alone.
